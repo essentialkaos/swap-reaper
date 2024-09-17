@@ -1,0 +1,23 @@
+# This is configuration file for swap-reaper
+
+[limits]
+
+  # If 1 min LA is greater than given value cleaning will be postponed (> 0.1)
+  max-la: 1.0
+
+  # Max time in minutes to wait for LA to normalize (1-86,400)
+  max-wait: 15
+
+[log]
+
+  # Log file dir
+  dir: /var/log/swap-reaper
+
+  # Path to log file
+  file: {log:dir}/swap-reaper.log
+
+  # Log permissions
+  perms: 644
+
+  # Default log level (debug/info/warn/error/crit)
+  level: info

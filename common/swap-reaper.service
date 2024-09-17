@@ -1,0 +1,16 @@
+[Unit]
+Description=Tool to periodically clean swap memory
+Documentation=https://kaos.sh/swap-reaper
+After=network-online.target remote-fs.target nss-lookup.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/swap-reaper -c /etc/swap-reaper.knf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+StandardError=file:/var/log/swap-reaper/startup.log
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
