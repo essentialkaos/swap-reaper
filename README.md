@@ -2,6 +2,7 @@
 
 <p align="center">
   <a href="https://kaos.sh/l/swap-reaper"><img src="https://kaos.sh/l/2789fa8237b648b33b22.svg" alt="Code Climate Maintainability" /></a>
+  <a href="https://kaos.sh/y/swap-reaper"><img src="https://kaos.sh/y/47f9bd9f8b654f299891299b8df32e71.svg" alt="Codacy" /></a>
   <a href="https://kaos.sh/w/swap-reaper/ci"><img src="https://kaos.sh/w/swap-reaper/ci.svg" alt="GitHub Actions CI Status" /></a>
   <a href="https://kaos.sh/w/swap-reaper/codeql"><img src="https://kaos.sh/w/swap-reaper/codeql.svg" alt="GitHub Actions CodeQL Status" /></a>
   <a href="#license"><img src=".github/images/license.svg"/></a>
