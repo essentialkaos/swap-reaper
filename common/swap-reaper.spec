@@ -14,7 +14,7 @@
 
 Summary:        Tool to periodically clean swap memory
 Name:           swap-reaper
-Version:        0.0.1
+Version:        0.0.2
 Release:        0%{?dist}
 Group:          Applications/System
 License:        Apache License, Version 2.0
@@ -26,7 +26,7 @@ Source100:      checksum.sha512
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  golang >= 1.22
+BuildRequires:  golang >= 1.23
 
 Requires:       systemd
 
@@ -105,5 +105,9 @@ fi
 ################################################################################
 
 %changelog
+* Thu May 15 2025 Anton Novojilov <andy@essentialkaos.com> - 0.0.2-0
+- Code refactoring
+- Dependencies update
+
 * Thu Sep 12 2024 Anton Novojilov <andy@essentialkaos.com> - 0.0.1-0
 - The very first version
