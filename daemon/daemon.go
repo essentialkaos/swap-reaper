@@ -2,7 +2,7 @@ package daemon
 
 // ////////////////////////////////////////////////////////////////////////////////// //
 //                                                                                    //
-//                         Copyright (c) 2024 ESSENTIAL KAOS                          //
+//                         Copyright (c) 2025 ESSENTIAL KAOS                          //
 //      Apache License, Version 2.0 <https://www.apache.org/licenses/LICENSE-2.0>     //
 //                                                                                    //
 // ////////////////////////////////////////////////////////////////////////////////// //
@@ -11,10 +11,9 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"strings"
 	"time"
 
-	"github.com/essentialkaos/ek/v13/errutil"
+	"github.com/essentialkaos/ek/v13/errors"
 	"github.com/essentialkaos/ek/v13/fmtc"
 	"github.com/essentialkaos/ek/v13/fmtutil"
 	"github.com/essentialkaos/ek/v13/knf"
@@ -42,7 +41,7 @@ import (
 // Basic service info
 const (
 	APP  = "swap-reaper"
-	VER  = "0.0.1"
+	VER  = "0.0.2"
 	DESC = "Service to periodically clean swap memory"
 )
 
@@ -91,7 +90,7 @@ func Run(gitRev string, gomod []byte) {
 
 	if !errs.IsEmpty() {
 		terminal.Error("Options parsing errors:")
-		terminal.Error(errs.String())
+		terminal.Error(errs.Error("- "))
 		os.Exit(1)
 	}
 
@@ -114,7 +113,7 @@ func Run(gitRev string, gomod []byte) {
 		os.Exit(0)
 	}
 
-	err := errutil.Chain(
+	err := errors.Chain(
 		checkUser,
 		loadConfig,
 		validateConfig,
@@ -123,10 +122,11 @@ func Run(gitRev string, gomod []byte) {
 	)
 
 	if err != nil {
-		printErrorAndExit(err.Error())
+		terminal.Error(err)
+		os.Exit(1)
 	}
 
-	log.Aux(strings.Repeat("-", 80))
+	log.Divider()
 	log.Aux("%s %s starting…", APP, VER)
 
 	err = start()
@@ -221,7 +221,7 @@ func registerSignalHandlers() error {
 
 // setupLogger configures logger subsystem
 func setupLogger() error {
-	err := log.Set(knf.GetS(LOG_FILE), knf.GetM(LOG_PERMS, 644))
+	err := log.Set(knf.GetS(LOG_FILE), knf.GetM(LOG_PERMS, 0644))
 
 	if err != nil {
 		return err
@@ -390,13 +390,15 @@ func cleanSwap() error {
 // intSignalHandler is INT signal handler
 func intSignalHandler() {
 	log.Aux("Received INT signal, shutdown…")
-	shutdown(0)
+	log.Flush()
+	os.Exit(0)
 }
 
 // termSignalHandler is TERM signal handler
 func termSignalHandler() {
 	log.Aux("Received TERM signal, shutdown…")
-	shutdown(0)
+	log.Flush()
+	os.Exit(0)
 }
 
 // hupSignalHandler is HUP signal handler
@@ -404,17 +406,6 @@ func hupSignalHandler() {
 	log.Info("Received HUP signal, log will be reopened…")
 	log.Reopen()
 	log.Info("Log reopened by HUP signal")
-}
-
-// printErrorAndExit print error message and exit with exit code 1
-func printErrorAndExit(f string, a ...interface{}) {
-	terminal.Error(f, a...)
-	os.Exit(1)
-}
-
-// shutdown stops daemon
-func shutdown(code int) {
-	os.Exit(code)
 }
 
 // ////////////////////////////////////////////////////////////////////////////////// //
