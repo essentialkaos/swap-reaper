@@ -41,7 +41,7 @@ import (
 // Basic service info
 const (
 	APP  = "swap-reaper"
-	VER  = "0.0.2"
+	VER  = "0.0.3"
 	DESC = "Service to periodically clean swap memory"
 )
 
