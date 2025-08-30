@@ -1,6 +1,6 @@
 module github.com/essentialkaos/swap-reaper
 
-go 1.23.10
+go 1.24.0
 
 require github.com/essentialkaos/ek/v13 v13.33.0
 
