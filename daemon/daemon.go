@@ -41,7 +41,7 @@ import (
 // Basic service info
 const (
 	APP  = "swap-reaper"
-	VER  = "0.0.2"
+	VER  = "0.0.3"
 	DESC = "Service to periodically clean swap memory"
 )
 
@@ -351,12 +351,12 @@ func checkLoop(swappiness int) {
 		if err != nil {
 			log.Info(
 				"Data successfully moved from swap to memory (took %s)",
-				timeutil.ShortDuration(time.Since(start), true),
+				timeutil.Pretty(time.Since(start)).Short(true),
 			)
 		} else {
 			log.Info(
 				"Data successfully moved from swap to memory (took %s). Memory: %s / %s (%s)",
-				timeutil.ShortDuration(time.Since(start), true),
+				timeutil.Pretty(time.Since(start)).Short(true),
 				fmtutil.PrettySize(newMem.MemUsed), fmtutil.PrettySize(newMem.MemTotal),
 				fmtutil.PrettyPerc(mathutil.Perc(newMem.MemUsed, newMem.MemTotal)),
 			)
