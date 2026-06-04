@@ -1,9 +1,9 @@
 <p align="center"><a href="#readme"><img src=".github/images/card.svg"/></a></p>
 
 <p align="center">
-  <a href="https://kaos.sh/y/swap-reaper"><img src="https://kaos.sh/y/47f9bd9f8b654f299891299b8df32e71.svg" alt="Codacy" /></a>
-  <a href="https://kaos.sh/w/swap-reaper/ci"><img src="https://kaos.sh/w/swap-reaper/ci.svg" alt="GitHub Actions CI Status" /></a>
-  <a href="https://kaos.sh/w/swap-reaper/codeql"><img src="https://kaos.sh/w/swap-reaper/codeql.svg" alt="GitHub Actions CodeQL Status" /></a>
+  <a href="https://kaos.sh/y/swap-reaper"><img src="https://app.codacy.com/project/badge/Grade/47f9bd9f8b654f299891299b8df32e71" alt="Codacy" /></a>
+  <a href="https://kaos.sh/w/swap-reaper/ci"><img src="https://github.com/essentialkaos/swap-reaper/actions/workflows/ci.yml/badge.svg" alt="GitHub Actions CI Status" /></a>
+  <a href="https://kaos.sh/w/swap-reaper/codeql"><img src="https://github.com/essentialkaos/swap-reaper/actions/workflows/codeql.yml/badge.svg" alt="GitHub Actions CodeQL Status" /></a>
   <a href="#license"><img src=".github/images/license.svg"/></a>
 </p>
 
@@ -26,8 +26,8 @@ sudo dnf install swap-reaper
 
 | Branch | Status |
 |--------|----------|
-| `master` | [![CI](https://kaos.sh/w/swap-reaper/ci.svg?branch=master)](https://kaos.sh/w/swap-reaper/ci?query=branch:master) |
-| `develop` | [![CI](https://kaos.sh/w/swap-reaper/ci.svg?branch=develop)](https://kaos.sh/w/swap-reaper/ci?query=branch:develop) |
+| `master` | [![CI](https://github.com/essentialkaos/swap-reaper/actions/workflows/ci.yml/badge.svg?branch=master)](https://kaos.sh/w/swap-reaper/ci?query=branch:master) |
+| `develop` | [![CI](https://github.com/essentialkaos/swap-reaper/actions/workflows/ci.yml/badge.svg?branch=develop)](https://kaos.sh/w/swap-reaper/ci?query=branch:develop) |
 
 ### Contributing
 

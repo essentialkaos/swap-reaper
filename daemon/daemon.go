@@ -2,7 +2,7 @@ package daemon
 
 // ////////////////////////////////////////////////////////////////////////////////// //
 //                                                                                    //
-//                         Copyright (c) 2025 ESSENTIAL KAOS                          //
+//                         Copyright (c) 2026 ESSENTIAL KAOS                          //
 //      Apache License, Version 2.0 <https://www.apache.org/licenses/LICENSE-2.0>     //
 //                                                                                    //
 // ////////////////////////////////////////////////////////////////////////////////// //
@@ -13,27 +13,27 @@ import (
 	"os/exec"
 	"time"
 
-	"github.com/essentialkaos/ek/v13/errors"
-	"github.com/essentialkaos/ek/v13/fmtc"
-	"github.com/essentialkaos/ek/v13/fmtutil"
-	"github.com/essentialkaos/ek/v13/knf"
-	"github.com/essentialkaos/ek/v13/log"
-	"github.com/essentialkaos/ek/v13/mathutil"
-	"github.com/essentialkaos/ek/v13/options"
-	"github.com/essentialkaos/ek/v13/signal"
-	"github.com/essentialkaos/ek/v13/support"
-	"github.com/essentialkaos/ek/v13/support/deps"
-	"github.com/essentialkaos/ek/v13/support/kernel"
-	"github.com/essentialkaos/ek/v13/support/resources"
-	"github.com/essentialkaos/ek/v13/system"
-	"github.com/essentialkaos/ek/v13/system/sysctl"
-	"github.com/essentialkaos/ek/v13/terminal"
-	"github.com/essentialkaos/ek/v13/terminal/tty"
-	"github.com/essentialkaos/ek/v13/timeutil"
-	"github.com/essentialkaos/ek/v13/usage"
+	"github.com/essentialkaos/ek/v14/errors"
+	"github.com/essentialkaos/ek/v14/fmtc"
+	"github.com/essentialkaos/ek/v14/fmtutil"
+	"github.com/essentialkaos/ek/v14/knf"
+	"github.com/essentialkaos/ek/v14/log"
+	"github.com/essentialkaos/ek/v14/mathutil"
+	"github.com/essentialkaos/ek/v14/options"
+	"github.com/essentialkaos/ek/v14/signal"
+	"github.com/essentialkaos/ek/v14/support"
+	"github.com/essentialkaos/ek/v14/support/deps"
+	"github.com/essentialkaos/ek/v14/support/kernel"
+	"github.com/essentialkaos/ek/v14/support/resources"
+	"github.com/essentialkaos/ek/v14/system"
+	"github.com/essentialkaos/ek/v14/system/sysctl"
+	"github.com/essentialkaos/ek/v14/terminal"
+	"github.com/essentialkaos/ek/v14/terminal/tty"
+	"github.com/essentialkaos/ek/v14/timeutil"
+	"github.com/essentialkaos/ek/v14/usage"
 
-	knfv "github.com/essentialkaos/ek/v13/knf/validators"
-	knff "github.com/essentialkaos/ek/v13/knf/validators/fs"
+	knfv "github.com/essentialkaos/ek/v14/knf/validators"
+	knff "github.com/essentialkaos/ek/v14/knf/validators/fs"
 )
 
 // ////////////////////////////////////////////////////////////////////////////////// //
@@ -41,7 +41,7 @@ import (
 // Basic service info
 const (
 	APP  = "swap-reaper"
-	VER  = "0.0.3"
+	VER  = "0.1.0"
 	DESC = "Service to periodically clean swap memory"
 )
 
@@ -90,7 +90,7 @@ func Run(gitRev string, gomod []byte) {
 
 	if !errs.IsEmpty() {
 		terminal.Error("Options parsing errors:")
-		terminal.Error(errs.Error("- "))
+		terminal.Error(errs.ErrorWithPrefix(" - "))
 		os.Exit(1)
 	}
 
@@ -248,7 +248,13 @@ func start() error {
 		return fmt.Errorf("Swap is disabled, nothing to do…")
 	}
 
-	swappiness, err := sysctl.GetI("vm.swappiness")
+	kernSwap, err := sysctl.Get("vm.swappiness")
+
+	if err != nil {
+		return fmt.Errorf("Can't read swappiness configuration: %v", err)
+	}
+
+	swappiness, err := kernSwap.Int()
 
 	if err != nil {
 		return fmt.Errorf("Can't read swappiness configuration: %v", err)
